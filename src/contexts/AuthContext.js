@@ -30,6 +30,7 @@ export const AuthProvider = ({children}) => {
     }
     
     useEffect(() => {
+      if (!currentUser) return;
       console.log(currentUser);
     }, [currentUser]);
     

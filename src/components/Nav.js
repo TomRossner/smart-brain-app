@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 const Nav = () => {
   const {currentUser} = useContext(AuthContext);
+  const navigate = useNavigate();
   return (
     <nav>
-        <div>Logo</div>
+        <div className='logo' onClick={() => navigate("/")}>
+          <h1>Smart Brain</h1>
+          <p>Face Recognition</p>
+        </div>
         <ul>
           {currentUser
           ? (

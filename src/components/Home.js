@@ -13,11 +13,12 @@ const Home = () => {
       const filesLength = e.target.files.length;
       reader.addEventListener("load", () => setImageURL(reader.result));
       if (filesLength) reader.readAsDataURL(e.target.files[0]);
-      return reader.removeEventListener("load");
+      return reader.removeEventListener("load", () => {});
     };
 
     const handleInputChange = (e) => setInputFieldValue(e.target.value);
     const handleAddImg = () => {
+      if (!inputFieldValue) return;
       setImageURL(inputFieldValue);
       return setInputFieldValue("");
     };
@@ -26,10 +27,8 @@ const Home = () => {
 
   return (
     <div className='container'>
-        <h1>Smart Brain</h1>
-        <p>Face Recognition</p>
         <div className='input-container'>
-        {currentUser ? <p>You current rank is {currentUser.entries}</p> : null}
+        {currentUser ? <p>{currentUser.name.toUpperCase()}, your current rank is {currentUser.entries}</p> : null}
             <div className='insert-img-url'>
               <input type="text" placeholder='Insert image URL' value={inputFieldValue} onChange={handleInputChange}/>
               <button type='button' id='add-img' className='btn' onClick={handleAddImg}>Add</button>
