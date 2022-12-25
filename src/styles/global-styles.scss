@@ -8,6 +8,102 @@
 body{
     min-width: 100%;
     min-height: 100vh;
-    background-color: rgba(0, 0, 0, 0.95);
+    background-color: rgba(0, 0, 0, 0.9);
     position: relative;
+}
+
+.app-container{
+    min-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.link{
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.15s;
+
+    &:hover{
+        color: rgba(255, 255, 255, 0.7);
+    }
+}
+
+.buttons-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn{
+    min-width: 30%;
+    max-width: 100px;
+    font-family: Poppins, sans-serif;
+    padding: 0.2em 0.5em;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: rgb(10, 118, 219);
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s, scale 0.1s;
+
+    &:hover{
+        background-color: rgb(53, 141, 223);
+    }
+
+    &:active{
+        scale: 0.95;
+    }
+}
+
+h1, h2, h3{
+    color: white;
+    text-align: center;
+}
+
+input{
+    font-size: 1.1rem;
+    max-width: 400px;
+
+    &::placeholder{
+        color: rgba(0, 0, 0, 0.5);
+        font-style: italic;
+    }
+}
+
+.blue{
+    color: rgb(53, 141, 223);
+}
+
+.small-text{
+    font-size: 0.95rem;
+    text-transform: none;
+}
+
+.error{
+    width: 100%;
+    background-color: rgba(177, 49, 49, 0.67);
+    text-align: center;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: white;
+    padding: 0.3em 0.5em;
+    border-radius: 5px;
+}
+
+.space{
+    flex: 1;
 }
