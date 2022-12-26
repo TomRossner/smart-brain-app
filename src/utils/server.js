@@ -34,24 +34,15 @@ app.get('/', (req, res) => {
 });
 
 app.post('/sign-in', (req, res) => {
-  // res.json('Signing in...');
-  console.log(req.body);
-  if (req.body.email === database.users[1].email &&
-    req.body.password === database.users[1].password) {
-      // res.json(`Successfully logged in ${database.users[0].name}`);
-      return res.json(database.users[1]);
-    } else {
-      res.status(400).json("Error logging in. Please try again");
-    }
+    database.users.forEach((user) => {
+      if (user.email === req.body.email && user.password === req.body.password) res.json(user);
+    });
 });
 
 app.post("/register", (req, res) => {
   const {email, name, password} = req.body;
     bcrypt.hash(password, 10, function (err, hash){
-      // console.log("Hash", hash);
-      // bcrypt.compare(password, hash, function (err, res){
-      //   console.log(res)
-      // })
+      console.log("Hash", hash);
     })
   database.users.push({
     id: "126",
