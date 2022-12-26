@@ -22,8 +22,7 @@ const Home = () => {
       setImageURL(inputFieldValue);
       return setInputFieldValue("");
     };
-
-    const handleDetect = () => {};
+    
 
   return (
     <div className='container'>
@@ -47,7 +46,7 @@ const Home = () => {
         </div>
 
         <div className='image-container'>
-            {imageURL ? <button type='button' className='btn' onClick={handleDetect}>Detect</button> : null}
+            {imageURL ? <button type='button' className='btn'>Detect</button> : null}
             <img src={imageURL} alt=""/>
         </div>
     </div>
