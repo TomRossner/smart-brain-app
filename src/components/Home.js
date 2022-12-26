@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { ImageContext } from '../contexts/ImageContext';
-import { stub, APP_ID, USER_ID, metadata } from '../index';
 
 const Home = () => {
     const {currentUser} = useContext(AuthContext);
@@ -24,31 +23,6 @@ const Home = () => {
     };
 
     const handleDetect = () => {};
-
-
-    stub.PostInputs(
-      {
-          user_app_id: {
-              "user_id": USER_ID,
-              "app_id": APP_ID
-          },
-          inputs: [
-              { data: { image: { url: imageURL, allow_duplicate_url: true } } }
-          ]
-      },
-      metadata,
-      (err, response) => {
-          if (err) {
-              throw new Error(err);
-          }
-  
-          if (response.status.code !== 10000) {
-              console.log(response.status);
-              throw new Error("Post inputs failed, status: " + response.status.description);
-          }
-      }
-  
-  );
 
 
 
