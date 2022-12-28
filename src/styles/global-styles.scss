@@ -43,7 +43,6 @@ body{
 
 .btn{
     min-width: 30%;
-    max-width: 100px;
     font-family: Poppins, sans-serif;
     padding: 0.2em 0.5em;
     color: white;
@@ -54,6 +53,7 @@ body{
     border: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
+    user-select: none;
     
     display: flex;
     align-items: center;
@@ -99,7 +99,7 @@ input{
     text-align: center;
     font-size: 1.05rem;
     font-style: italic;
-    color: white;
+    color: rgb(253, 229, 8);
     padding: 0.3em 0.5em;
     border-radius: 5px;
 }

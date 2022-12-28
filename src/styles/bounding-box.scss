@@ -1,0 +1,14 @@
+.bounding-box{
+    border: 2px solid rgb(0, 110, 255);
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    transition: border 0.1s, scale 0.1s;
+
+    &:hover{
+        border: 2px solid rgb(0, 162, 255);
+        scale: 1.05;
+    }
+}
+
