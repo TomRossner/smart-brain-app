@@ -25,7 +25,7 @@ const Home = () => {
 
     const handleInputChange = (e) => setInputFieldValue(e.target.value);
 
-    const handleAddImg = () => {
+    const handleAddImage = () => {
       if (!inputFieldValue) return;
       if (boundingBoxes.length) resetBoundingBoxes();
       if (error) resetError();
@@ -43,7 +43,7 @@ const Home = () => {
         });
         const calculatedResults = results[0].map(result => {
           const {region_info: {bounding_box}} = result;
-          return calculateFaceLocation(bounding_box)
+          return calculateFaceLocation(bounding_box);
         });
         if (error) resetError();
         setBoundingBoxes(calculatedResults);
@@ -89,7 +89,7 @@ const Home = () => {
         {currentUser ? <p>{currentUser.name.toUpperCase()}, your current rank is {currentUser.entries}</p> : null}
             <div className='insert-img-url'>
               <input type="text" placeholder='Insert image URL' value={inputFieldValue} onChange={handleInputChange}/>
-              <button type='button' id='add-img' className='btn' onClick={handleAddImg}>Add</button>
+              <button type='button' id='add-img' className='btn' onClick={handleAddImage}>Add</button>
             </div>
             <div className='upload-from-computer'>
               <span className='or'>OR</span>
