@@ -29,10 +29,10 @@ const Register = () => {
     };
 
     const handleInputChange = (e) => {
-      if (e.target.name === "email") return setFieldValues({...fieldValues, [e.target.name]: e.target.value})
-      if (e.target.name === "password") return setFieldValues({...fieldValues, [e.target.name]: e.target.value})
-      if (e.target.name === "confirmPassword") return setFieldValues({...fieldValues, [e.target.name]: e.target.value})
-      if (e.target.name === "name") return setFieldValues({...fieldValues, [e.target.name]: e.target.value})
+      if (e.target.name === "email") return setFieldValues({...fieldValues, [e.target.name]: e.target.value});
+      if (e.target.name === "password") return setFieldValues({...fieldValues, [e.target.name]: e.target.value});
+      if (e.target.name === "confirmPassword") return setFieldValues({...fieldValues, [e.target.name]: e.target.value});
+      if (e.target.name === "name") return setFieldValues({...fieldValues, [e.target.name]: e.target.value});
     };
 
   return (

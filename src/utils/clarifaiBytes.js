@@ -1,5 +1,9 @@
 const express = require("express");
-const router = express.Router();
+const routerBytes = express.Router()
+
+// const dotenv = require("dotenv");
+// dotenv.config()
+// console.log(dotenv.config())
 
 const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
 
@@ -15,8 +19,12 @@ const MODEL_VERSION_ID = '';
 
 metadata.set("authorization", "Key " + PAT);
 
+const fs = require("fs");
+const path = require("path");
 
-const predictImage = (inputs) => {
+
+const predictImageBytes = (inputs) => {
+    console.log("bytes inputs", inputs)
     return new Promise((resolve, reject) => {
         stub.PostModelOutputs(
             {
@@ -48,19 +56,22 @@ const predictImage = (inputs) => {
     })  
 }
 
-router.post("/", async (req, res) => {
+routerBytes.post("/", async (req, res) => {
     try {
-        const {imageURL} = req.body;
+        const {imageForBytes} = req.body;
+        console.log("I'm here");
+        const imageBytes = fs.readFileSync(imageForBytes, 'base64');
+        console.log("routerBytes", imageBytes.substring(0, 100));
         const inputs = [
             {
                 data: {
                     image: {
-                        url: imageURL
+                        base64: imageBytes
                     }
                 }
             }
         ];
-        const results = await predictImage(inputs);
+        const results = await predictImageBytes(inputs);
         return res.send({results})
     } catch (error) {
         return res.status(400).send({
@@ -69,4 +80,4 @@ router.post("/", async (req, res) => {
     }
 })
 
-module.exports = router;
+module.exports = routerBytes;

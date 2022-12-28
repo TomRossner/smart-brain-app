@@ -13,6 +13,7 @@ import "./styles/nav.scss";
 import "./styles/home.scss";
 import "./styles/footer.scss";
 import "./styles/auth.scss";
+import "./styles/bounding-box.scss";
 import Register from "./components/Register";
 import { useContext } from "react";
 import { AuthContext } from "./contexts/AuthContext";
