@@ -1,10 +1,6 @@
 const express = require("express");
 const routerBytes = express.Router()
 
-// const dotenv = require("dotenv");
-// dotenv.config()
-// console.log(dotenv.config())
-
 const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
 
 const stub = ClarifaiStub.grpc();
@@ -19,12 +15,9 @@ const MODEL_VERSION_ID = '';
 
 metadata.set("authorization", "Key " + PAT);
 
-const fs = require("fs");
-const path = require("path");
-
+const Buffer = require("buffer/").Buffer;
 
 const predictImageBytes = (inputs) => {
-    console.log("bytes inputs", inputs)
     return new Promise((resolve, reject) => {
         stub.PostModelOutputs(
             {
@@ -56,17 +49,22 @@ const predictImageBytes = (inputs) => {
     })  
 }
 
+const convertURL = (url) => {
+    const urlToBuffer = url.split(',')[1];
+    const bufferedURL = Buffer.from(urlToBuffer, 'base64');
+    const convertToBase64String = bufferedURL.toString('base64');
+    return convertToBase64String;
+}
+
 routerBytes.post("/", async (req, res) => {
     try {
-        const {imageForBytes} = req.body;
-        console.log("I'm here");
-        const imageBytes = fs.readFileSync(imageForBytes, 'base64');
-        console.log("routerBytes", imageBytes.substring(0, 100));
+        const {imageURL} = req.body;
+        const convertedURL = convertURL(imageURL);
         const inputs = [
             {
                 data: {
                     image: {
-                        base64: imageBytes
+                        base64: convertedURL
                     }
                 }
             }

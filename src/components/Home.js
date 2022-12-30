@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { ImageContext } from '../contexts/ImageContext';
@@ -25,7 +25,7 @@ const Home = () => {
 
     const handleInputChange = (e) => setInputFieldValue(e.target.value);
 
-    const handleAddImg = () => {
+    const handleAddImage = () => {
       if (!inputFieldValue) return;
       if (boundingBoxes.length) resetBoundingBoxes();
       if (error) resetError();
@@ -38,38 +38,23 @@ const Home = () => {
 
     const predictImage = async () => {
       try {
-        const {data: {results}} = await post("/predict", {
+        const {data: {results}} = await post(imageURL.substring(0, 5) === "https"
+        ? "/predict"
+        : "/predict-bytes", {
           imageURL: imageURL
         });
         const calculatedResults = results[0].map(result => {
           const {region_info: {bounding_box}} = result;
-          return calculateFaceLocation(bounding_box)
+          return calculateFaceLocation(bounding_box);
         });
         if (error) resetError();
         setBoundingBoxes(calculatedResults);
       } catch ({response: {data: {error}}}) {
         return setError(error);
       }
-    }
+    };
 
-    const predictImageViaBytes = async () => {
-      try {
-        await post("/predict-bytes", {
-          imageURL: imageURL
-        });
-        if (error) resetError();
-      } catch ({response: {data: {error}}}) {
-        console.log(error)
-        if (error.code === "ERR_INVALID_ARG_TYPE") return setError("Cannot read image link. Please provide a valid image link (http/https).");
-        else return setError("Face-detection failed");
-      }
-    }
-
-    const handleDetect = () => {
-      imageURL.substring(0, 5) === "https"
-      ? predictImage()
-      : predictImageViaBytes();
-    }
+    const handleDetect = () => predictImage();
 
     const calculateFaceLocation = (face) => {
       const image = imgRef.current;
@@ -81,7 +66,7 @@ const Home = () => {
         right: width - (face.right_col * width),
         bottom: height - (face.bottom_row * height)
       }
-    }
+    };
 
   return (
     <div className='container'>
@@ -89,7 +74,7 @@ const Home = () => {
         {currentUser ? <p>{currentUser.name.toUpperCase()}, your current rank is {currentUser.entries}</p> : null}
             <div className='insert-img-url'>
               <input type="text" placeholder='Insert image URL' value={inputFieldValue} onChange={handleInputChange}/>
-              <button type='button' id='add-img' className='btn' onClick={handleAddImg}>Add</button>
+              <button type='button' id='add-img' className='btn' onClick={handleAddImage}>Add</button>
             </div>
             <div className='upload-from-computer'>
               <span className='or'>OR</span>
