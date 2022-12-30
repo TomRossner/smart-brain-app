@@ -1,10 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { ImageContext } from '../contexts/ImageContext';
 import { httpService } from '../utils/api';
 import BoundingBox from './BoundingBox';
-import { Buffer } from 'buffer';
 
 const Home = () => {
     const {currentUser} = useContext(AuthContext);
@@ -39,7 +38,9 @@ const Home = () => {
 
     const predictImage = async () => {
       try {
-        const {data: {results}} = await post("/predict", {
+        const {data: {results}} = await post(imageURL.substring(0, 5) === "https"
+        ? "/predict"
+        : "/predict-bytes", {
           imageURL: imageURL
         });
         const calculatedResults = results[0].map(result => {
@@ -51,30 +52,9 @@ const Home = () => {
       } catch ({response: {data: {error}}}) {
         return setError(error);
       }
-    }
+    };
 
-    const predictImageViaBytes = async (url) => {
-      try {
-        await post("/predict-bytes", {
-          imageURL: url
-        });
-        if (error) resetError();
-      } catch (error) {
-        console.log(error)
-        // if (error.code === "ERR_INVALID_ARG_TYPE") return setError("Cannot read image link. Please provide a valid image link (http/https).");
-        // else return setError("Face-detection failed");
-      }
-    }
-
-    
-
-    const handleDetect = () => {
-      // console.log(imageURL.substring(0, 25))
-      // console.log(imageURL.split(",")[1])
-      imageURL.substring(0, 5) === "https"
-      ? predictImage()
-      : predictImageViaBytes(imageURL);
-    }
+    const handleDetect = () => predictImage();
 
     const calculateFaceLocation = (face) => {
       const image = imgRef.current;
@@ -86,7 +66,7 @@ const Home = () => {
         right: width - (face.right_col * width),
         bottom: height - (face.bottom_row * height)
       }
-    }
+    };
 
   return (
     <div className='container'>

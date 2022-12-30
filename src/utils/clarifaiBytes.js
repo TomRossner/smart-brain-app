@@ -1,10 +1,6 @@
 const express = require("express");
 const routerBytes = express.Router()
 
-// const dotenv = require("dotenv");
-// dotenv.config()
-// console.log(dotenv.config())
-
 const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
 
 const stub = ClarifaiStub.grpc();
@@ -19,14 +15,9 @@ const MODEL_VERSION_ID = '';
 
 metadata.set("authorization", "Key " + PAT);
 
-const fs = require("fs");
-const path = require("path");
-const Buffer = require("buffer");
-const pako = require('pako');
-
+const Buffer = require("buffer/").Buffer;
 
 const predictImageBytes = (inputs) => {
-    console.log("bytes inputs", inputs)
     return new Promise((resolve, reject) => {
         stub.PostModelOutputs(
             {
@@ -59,42 +50,21 @@ const predictImageBytes = (inputs) => {
 }
 
 const convertURL = (url) => {
-    // console.log(url)
-    const UrlToBuffer = url.split(",")[1];
-    // console.log(encodedData)
-
-    // Decode the data URL to a buffer
-    const bufferedURL = Buffer.from(UrlToBuffer);
-
-    // Convert the buffer to a base64 string
-    const base64String = bufferedURL.toString('base64');
-    console.log("Im in convertURL function", base64String)
-    return base64String;
+    const urlToBuffer = url.split(',')[1];
+    const bufferedURL = Buffer.from(urlToBuffer, 'base64');
+    const convertToBase64String = bufferedURL.toString('base64');
+    return convertToBase64String;
 }
-
-
-const compressURL = (url) => {
-    console.log(url.substring(0, 20))
-    const base64String = url;
-    const compressedString = pako.deflate(base64String, { to: 'string' });
-    console.log("IM in compressURL function")
-    return compressedString;
-} 
 
 routerBytes.post("/", async (req, res) => {
     try {
         const {imageURL} = req.body;
-        // console.log(imageURL.substring(0, 10))
         const convertedURL = convertURL(imageURL);
-        console.log("im here")
-        const compressedURL = compressURL(convertedURL);
-        const imageBytes = fs.readFileSync(compressedURL);
-        // console.log("routerBytes", imageBytes.substring(0, 100));
         const inputs = [
             {
                 data: {
                     image: {
-                        base64: imageBytes
+                        base64: convertedURL
                     }
                 }
             }
