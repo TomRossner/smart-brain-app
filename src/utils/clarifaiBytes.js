@@ -1,25 +1,24 @@
 const express = require("express");
-const routerBytes = express.Router()
-const KEY = require("../API_KEY");
-const ID = require("../USER_ID");
-
+const routerBytes = express.Router();
 const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
 
 const stub = ClarifaiStub.grpc();
 const metadata = new grpc.Metadata();
 
+require('dotenv').config();
     
-const USER_ID = ID;
-const PAT = KEY;
-const APP_ID = 'smart-brain';
-const MODEL_ID = 'face-detection';
+const USER_ID = process.env.USER_ID;
+const PAT = process.env.API_KEY;
+const APP_ID = process.env.APP_ID;
+const MODEL_ID = process.env.MODEL_ID;
 const MODEL_VERSION_ID = '';
 
-metadata.set("authorization", "Key " + PAT);
+metadata.set("authorization", `Key ${PAT}`);
 
 const Buffer = require("buffer/").Buffer;
 
 const predictImageBytes = (inputs) => {
+    // console.log(process.env.API_KEY)
     return new Promise((resolve, reject) => {
         stub.PostModelOutputs(
             {
