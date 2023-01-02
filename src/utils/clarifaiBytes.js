@@ -1,5 +1,7 @@
 const express = require("express");
 const routerBytes = express.Router()
+const KEY = require("../API_KEY");
+const ID = require("../USER_ID");
 
 const {ClarifaiStub, grpc} = require("clarifai-nodejs-grpc");
 
@@ -7,8 +9,8 @@ const stub = ClarifaiStub.grpc();
 const metadata = new grpc.Metadata();
 
     
-const USER_ID = 'tomrossner';
-const PAT = 'dfa460d3b60349279af5c811ed720d9a';
+const USER_ID = ID;
+const PAT = KEY;
 const APP_ID = 'smart-brain';
 const MODEL_ID = 'face-detection';
 const MODEL_VERSION_ID = '';
