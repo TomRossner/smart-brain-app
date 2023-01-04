@@ -19,7 +19,7 @@ const SignIn = () => {
     if (!email || !password) return;
     try {
       await loginUser(fieldValues);
-      navigate("/");
+      navigate("/smart-brain-app");
     } catch ({response}) {
       setError(response.data);
     }

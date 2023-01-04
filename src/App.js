@@ -25,7 +25,7 @@ const App = () => {
     <div className="app-container">
         <Nav/>
         <Routes>
-          <Route path="/" element={<Home/>}/>
+          <Route path="/smart-brain-app" element={<Home/>}/>
           {!currentUser
           ? (
             <>
