@@ -39,7 +39,7 @@ const database = {
 app.use("/predict", predictRouter);
 app.use("/predict-bytes", predictRouterBytes);
 
-app.get('/', (req, res) => {
+app.get('/smart-brain-app', (req, res) => {
   res.send(database.users);
 });
 
