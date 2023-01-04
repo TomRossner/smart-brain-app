@@ -7,7 +7,7 @@ const Nav = () => {
   const navigate = useNavigate();
   return (
     <nav>
-        <div className='logo' onClick={() => navigate("/")}>
+        <div className='logo' onClick={() => navigate("/smart-brain-app")}>
           <h1>Smart Brain</h1>
           <p>Face Recognition</p>
         </div>
