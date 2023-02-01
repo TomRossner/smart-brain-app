@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { login, register } from '../utils/api';
+import { login, register } from '../http/frontRequests';
 
 export const AuthContext = createContext({
     currentUser: null,
@@ -11,18 +11,12 @@ export const AuthProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState(null);
 
     const loadUser = (data) => {
-      return setCurrentUser({
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        entries: data.entries,
-        joinedAt: data.joinedAt
-      });
+      return setCurrentUser(data);
     }
 
     const loginUser = async (credentials) => {
-      const response = await login(credentials);
-      return loadUser(response);
+      const user = await login(credentials);
+      return loadUser(user);
     }
 
     const registerUser = async (data) => {

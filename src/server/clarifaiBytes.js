@@ -18,7 +18,6 @@ metadata.set("authorization", `Key ${PAT}`);
 const Buffer = require("buffer/").Buffer;
 
 const predictImageBytes = (inputs) => {
-    // console.log(process.env.API_KEY)
     return new Promise((resolve, reject) => {
         stub.PostModelOutputs(
             {
@@ -39,10 +38,10 @@ const predictImageBytes = (inputs) => {
                 if (response.status.code !== 10000) {
                     reject("Post model outputs failed, status: " + response.status.description);
                 }
-                
+
                 let results = [];
                 const output = response.outputs[0];
-                const {regions} = output.data;
+                const {regions} = output?.data;
                 results.push(regions);
                 resolve(results);
             }

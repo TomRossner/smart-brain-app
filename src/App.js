@@ -4,7 +4,11 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import SignIn from "./components/SignIn";
 import Logout from "./components/Logout";
+import Register from "./components/Register";
+import Profile from "./components/Profile";
 
+import { AuthContext } from "./contexts/AuthContext";
+import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 
 // STYLES
@@ -14,9 +18,7 @@ import "./styles/home.scss";
 import "./styles/footer.scss";
 import "./styles/auth.scss";
 import "./styles/bounding-box.scss";
-import Register from "./components/Register";
-import { useContext } from "react";
-import { AuthContext } from "./contexts/AuthContext";
+import "./styles/profile.scss";
 
 
 const App = () => {
@@ -34,6 +36,7 @@ const App = () => {
             </>
           ) : (
             <>  
+              <Route path="profile" element={<Profile/>}></Route>
               <Route path="logout" element={<Logout/>}/>
             </>
           )}

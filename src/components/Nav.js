@@ -16,6 +16,7 @@ const Nav = () => {
           ? (
             <div className='welcome-back'>
               <span>Welcome back {currentUser.name}</span>
+              <Link to="/profile" className='link'>Profile</Link>
               <Link to="/logout" className='link'>Logout</Link>
             </div>
             )
