@@ -20,6 +20,7 @@ import "./styles/auth.scss";
 import "./styles/bounding-box.scss";
 import "./styles/profile.scss";
 import "./styles/animations.scss";
+import "./styles/media-queries.scss";
 
 
 const App = () => {

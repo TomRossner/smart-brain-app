@@ -34,7 +34,7 @@ const addNewUser = async (req, res) => {
             await newUser.save();
             const user = await getUserById(newUser._id);
             storeUserPassword(email, password, 10);
-            setJwt(user._id);
+            // setJwt(user._id); // TO BE IMPLEMENTED
             res.status(200).send(user);
         }
     } catch (error) {

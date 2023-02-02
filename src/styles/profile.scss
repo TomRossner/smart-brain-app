@@ -58,3 +58,19 @@
         }
     }
 }
+
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+    .profile-container{
+        width: 30%;
+    }
+}
+@media screen and (min-width: 701px) and (max-width: 1024px) {
+    .profile-container{
+        width: 45%;
+    }
+}
+@media screen and (min-width: 150px) and (max-width: 700px) {
+    .profile-container{
+        width: 85%;
+    }
+}

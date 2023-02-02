@@ -24,16 +24,142 @@ nav{
         }
     }
 
-    .welcome-back{
-        display: flex;
-        width: auto;
-        gap: 2rem;
-        align-items: center;
+    ul{
+        .ul-right{
+            display: flex;
+            width: auto;
+            gap: 2rem;
+            align-items: center;
+    
+            span{
+                color: rgba(250, 250, 250, 0.5);
+                font-size: 1.1rem;
+                font-style: italic;
+            }
+        }
+    
+        .menu{
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem;
+            height: 30vh;
+            right: 0;
+            top: 4rem;
+            z-index: 100;
+            position: absolute;
+            text-align: right;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(250, 250, 250, 0.2);
+            pointer-events: initial;
+            
+            &.open{
+                transition: height 0.3s, opacity 0.15s;
+            }
+    
+            &.close{
+                height: 0;
+                opacity: 0;
+                transition: height 0.3s, opacity 0.2s;
 
-        span{
-            color: rgba(250, 250, 250, 0.5);
-            font-size: 1.1rem;
-            font-style: italic;
+                .link{
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 769px) {
+    nav{
+        ul{
+            .ul-right{
+                display: flex;
+            }
+    
+            .menu{
+                display: none;
+            }
+    
+            .icon-container{
+                display: none;
+                .icon{
+                    color: white;
+                    scale: 2.2;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 501px) and (max-width: 768px) {
+        nav{
+            position: relative;
+            z-index: 100;
+
+            ul{
+                .ul-right{
+                    display: none;
+                }
+    
+                .menu{
+                    width: 50%;
+                }
+
+                .icon-container{
+                    .icon{
+                        color: white;
+                        scale: 2.2;
+                    }
+                }
+            }
+        }
+}
+
+@media screen and (min-width: 451px) and (max-width: 500px) {
+    nav{
+        position: relative;
+        z-index: 100;
+        ul{
+            .ul-right{
+                display: none;
+            }
+
+            .menu{
+                width: 60%;
+            }
+
+            .icon-container{
+                .icon{
+                    color: white;
+                    scale: 2.2;
+                }
+            }
+        }
+    }
+}
+@media screen and (min-width: 200px) and (max-width: 450px) {
+    nav{
+        position: relative;
+        z-index: 100;
+        ul{
+            .ul-right{
+                display: none;
+            }
+
+            .menu{
+                width: 100%;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .icon-container{
+                .icon{
+                    color: white;
+                    scale: 2.2;
+                }
+            }
         }
     }
 }
