@@ -1,16 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { updateUser } from '../http/frontRequests';
 
 const Profile = () => {
+    const navigate = useNavigate();
     const {currentUser, setCurrentUser} = useContext(AuthContext);
+
     const handleFileUpload = async (e) => {
         const reader = new FileReader();
         const filesLength = e.target.files.length;
         reader.addEventListener("load", () => setCurrentUser({...currentUser, imgUrl: reader.result}));
         if (filesLength) reader.readAsDataURL(e.target.files[0]);
-        await updateUser({...currentUser, imgUrl: reader.result});
-        return reader.removeEventListener("load", () => {});
+        return await updateUser({...currentUser, imgUrl: reader.result});
     }
 
     const handleRemovePicture = async () => {
@@ -18,10 +20,9 @@ const Profile = () => {
         return await updateUser({...currentUser, imgUrl: ""});
     }
 
-    // useEffect(() => {
-    //     if (!currentUser) return;
-    // }, [currentUser]);
-
+    useEffect(() => {
+        if (!currentUser) navigate("/smart-brain-app");
+    }, [currentUser]);
 
   return (
     <div className='profile-container'>
@@ -32,10 +33,10 @@ const Profile = () => {
             <label htmlFor="upload-profile-picture">{currentUser.imgUrl ? "Change profile picture" : "Upload profile picture"}</label>
             <input type="file" name="upload-profile-picture" id="upload-profile-picture" onChange={handleFileUpload}></input>
             {currentUser.imgUrl ? <button className='btn' onClick={handleRemovePicture}>Remove picture</button> : null}
-            <p>Name: <span>{currentUser?.name}</span></p>
-            <p>Member since: <span>{currentUser?.created_at.split("T")[0]}</span></p>
-            <p>Email: <span>{currentUser?.email}</span></p>
-            <p>Score: <span>{currentUser?.predictions}</span></p>
+            <p>Name: <span>{currentUser.name}</span></p>
+            <p>Member since: <span>{currentUser.created_at.split("T")[0]}</span></p>
+            <p>Email: <span>{currentUser.email}</span></p>
+            <p>Submissions: <span>{currentUser.predictions}</span></p>
         </div>
     </div>
   )

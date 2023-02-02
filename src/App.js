@@ -19,6 +19,7 @@ import "./styles/footer.scss";
 import "./styles/auth.scss";
 import "./styles/bounding-box.scss";
 import "./styles/profile.scss";
+import "./styles/animations.scss";
 
 
 const App = () => {

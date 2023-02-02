@@ -4,12 +4,14 @@ import { AuthContext } from '../contexts/AuthContext';
 import { ImageContext } from '../contexts/ImageContext';
 import { httpService, updateUser } from '../http/frontRequests';
 import BoundingBox from './BoundingBox';
+import loader from "../assets/loader.png";
 
 const Home = () => {
     const {currentUser, setCurrentUser} = useContext(AuthContext);
     const {imageURL, setImageURL} = useContext(ImageContext);
     const [inputFieldValue, setInputFieldValue] = useState("");
     const [boundingBoxes, setBoundingBoxes] = useState([]);
+    const [isLoading, setLoading] = useState(false);
     const imgRef = useRef(null);
     const {post} = httpService;
     const [error, setError] = useState("");
@@ -55,9 +57,19 @@ const Home = () => {
     }
 
     const handleDetect = async () => {
-      setCurrentUser({...currentUser, predictions: currentUser.predictions + 1});
-      await predictImage();
-      return await updateUser(currentUser);
+      setLoading(true);
+      if (boundingBoxes) resetBoundingBoxes();
+      if (currentUser) {
+        setCurrentUser({...currentUser, predictions: currentUser.predictions + 1});
+        await predictImage();
+        setLoading(false);
+        if (currentUser) return await updateUser(currentUser);
+      }else {
+        await predictImage();
+        setLoading(false);
+        if (currentUser) return await updateUser(currentUser);
+        else return;
+      }
     }
 
     const calculateFaceLocation = (face) => {
@@ -77,7 +89,7 @@ const Home = () => {
         <div className='input-container'>
         {currentUser ?
         <>
-          <h2>Welcome back, {currentUser.name.substring(0, 1).toUpperCase() + currentUser.name.substring(1, currentUser.name.length)}.</h2>
+          <h2>Hi {currentUser.name.substring(0, 1).toUpperCase() + currentUser.name.substring(1, currentUser.name.length)}</h2>
           <p> So far, you have made {currentUser.predictions} submissions</p>
         </> : null}
             <div className='insert-img-url'>
@@ -99,6 +111,7 @@ const Home = () => {
         {error && <p className='error'>{error}</p>}
         {imageURL ? <button type='button' id='detect' className='btn' onClick={handleDetect}>Detect</button> : null}
         <div className='image-container'>
+            {isLoading ? <div className='loading-overlay on'><div className='spinner-container'><img src={loader} alt="loader"></img></div></div> : <div className='loading-overlay off'></div>}
             <img src={imageURL} ref={imgRef} alt=""/>
             {boundingBoxes.map((box, index) => <BoundingBox key={index} box={box}/>)}
         </div>

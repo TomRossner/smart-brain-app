@@ -3,6 +3,7 @@ const {
     checkUserPassword,
     storeUserPassword
 } = require("../bcrypt");
+const {setJwt} = require("../jwt");
 
 
 // Utility functions
@@ -32,7 +33,8 @@ const addNewUser = async (req, res) => {
             const newUser = new User({name, email, imgUrl: "", predictions: 0});
             await newUser.save();
             const user = await getUserById(newUser._id);
-            storeUserPassword(user._id, password, 10);
+            storeUserPassword(email, password, 10);
+            setJwt(user._id);
             res.status(200).send(user);
         }
     } catch (error) {
@@ -41,7 +43,6 @@ const addNewUser = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    console.log(req.body)
     try {
         const {email, password} = req.body;
         const user = await User.findOne({email: email}).select({password: 0, _id: 0});
@@ -72,16 +73,17 @@ const addPrediction = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const {email} = req.params;
-        const {name, password, predictions, imgUrl} = req.body;
+        const {name, password, predictions, imgUrl, ...rest} = req.body;
         const updatedUser = await User.updateOne({email: email}, {
             $set: {
                 name,
                 email,
                 predictions,
-                imgUrl
+                imgUrl,
+                ...rest
             }
         });
-        // await storeUserPassword(id, password, 10);
+        await storeUserPassword(email, password, 10);
         res.status(200).send(updatedUser);
     } catch (error) {
         console.log(error);

@@ -1,14 +1,13 @@
 const bcrypt = require("bcryptjs");
 const { User } = require("./models/models");
 
-const storeUserPassword = async (id ,password, salt) => {
+const storeUserPassword = async (email ,password, salt) => {
     const hashedPassword = await bcrypt.hash(password, salt);
-    storeHashInDatabase(id, hashedPassword);
+    storeHashInDatabase(email, hashedPassword);
 }
 
-const storeHashInDatabase = async (id, hash) => {  
-    const user = await User.findById(id);
-    const userSavedWithHash = await User.updateOne({_id : user._id}, {
+const storeHashInDatabase = async (email, hash) => {
+    const userSavedWithHash = await User.updateOne({email: email}, {
         $set: {
             password: hash
         }
