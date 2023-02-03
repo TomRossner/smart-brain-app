@@ -16,9 +16,18 @@ const Register = () => {
     const {name, password, confirmPassword, email} = fieldValues;
     const navigate = useNavigate();
 
+    const validate = () => {
+      const {name, password, confirmPassword, email} = fieldValues;
+      const isValid = name && password && confirmPassword && email ? true : false;
+
+      if (isValid) return true;
+      else return false;
+    }
+
     const handleFormSubmit = async (e) => {
       e.preventDefault();
-      Object.values(fieldValues).map(value => !value ? setError("You must fill out all fields") : value);
+      const isValid = validate();
+      if (!isValid) return setError("You must fill out all fields");
       if (password !== confirmPassword) return setError("Passwords do not match. Please try again");
       try {
         await registerUser(fieldValues);
@@ -29,10 +38,7 @@ const Register = () => {
     };
 
     const handleInputChange = (e) => {
-      if (e.target.name === "email") return setFieldValues({...fieldValues, [e.target.name]: e.target.value});
-      if (e.target.name === "password") return setFieldValues({...fieldValues, [e.target.name]: e.target.value});
-      if (e.target.name === "confirmPassword") return setFieldValues({...fieldValues, [e.target.name]: e.target.value});
-      if (e.target.name === "name") return setFieldValues({...fieldValues, [e.target.name]: e.target.value});
+      return setFieldValues({...fieldValues, [e.target.name]: e.target.value});
     };
 
   return (

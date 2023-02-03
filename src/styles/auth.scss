@@ -8,6 +8,7 @@
     gap: 2rem;
     height: 50vh;
     flex: 1;
+    animation: fadeIn forwards 0.3s;
 
     h2{
         font-size: 2rem;
@@ -21,5 +22,18 @@
         align-items: center;
         justify-content: center;
         gap: 1rem;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .form-container{
+        width: 60%;
+    }
+}
+
+
+@media screen and (max-width: 360px) {
+    .form-container{
+        width: 95%;
     }
 }

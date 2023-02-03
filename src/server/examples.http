@@ -1,0 +1,39 @@
+@local = http://localhost:3001
+
+###
+
+POST {{local}}/users
+Content-Type: application/json
+
+{
+    "name": "Tom2",
+    "email": "tom2@gmail.com",
+    "password": "tom123"
+}
+
+###
+
+POST {{local}}/login
+Content-Type: application/json
+
+{
+    "email": "tom@gmail.com",
+    "password": "password123"
+}
+
+###
+
+PUT {{local}}/update-predictions/63da70131f14a5d29175b914
+Content-Type: application/json
+
+###
+
+PUT {{local}}/update-user/63da70131f14a5d29175b914
+Content-Type: application/json
+
+{
+    "password": "password123",
+    "name": "Tom",
+    "email": "tom@gmail.com",
+    "predictions": 5
+}

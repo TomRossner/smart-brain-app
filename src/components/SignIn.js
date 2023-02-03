@@ -18,16 +18,17 @@ const SignIn = () => {
     e.preventDefault();
     if (!email || !password) return;
     try {
+      console.log(fieldValues)
       await loginUser(fieldValues);
       navigate("/smart-brain-app");
-    } catch ({response}) {
-      setError(response.data);
+    } catch (error) {
+      console.log(error)
+      // setError(error);
     }
   };
 
   const handleInputChange = (e) => {
-    if (e.target.name === "email") return setFieldValues({...fieldValues, [e.target.name]: e.target.value})
-    if (e.target.name === "password") return setFieldValues({...fieldValues, [e.target.name]: e.target.value})
+    return setFieldValues({...fieldValues, [e.target.name]: e.target.value})
   };
 
 
