@@ -4,6 +4,7 @@ const {
     storeUserPassword
 } = require("../bcrypt");
 const {setJwt} = require("../jwt");
+const {createUser, signInUser, signInGoogleUser} = require("../firebase");
 
 
 // Utility functions
@@ -34,6 +35,7 @@ const addNewUser = async (req, res) => {
             await newUser.save();
             const user = await getUserById(newUser._id);
             storeUserPassword(email, password, 10);
+            // createUser(email, password); // From Firebase
             // setJwt(user._id); // TO BE IMPLEMENTED
             res.status(200).send(user);
         }
@@ -48,12 +50,22 @@ const login = async (req, res) => {
         const user = await User.findOne({email: email}).select({password: 0, _id: 0});
         const userHash = await User.findOne({email: user.email}).select({_id: 0, password: 1});
         const isPasswordValid = await checkUserPassword(password, userHash.password);
+        // signInUser(email, password); // From Firebase
         if (user && isPasswordValid) return res.status(200).send(user);
         else return res.status(400).send("User not found");
     } catch (error) {
         console.log(error);
     }
 }
+
+// const loginWithGoogle = async (req, res) => {
+//     try {
+//         const user = await signInGoogleUser();
+//         console.log(user);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
 const addPrediction = async (req, res) => {
     try {
@@ -73,17 +85,14 @@ const addPrediction = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const {email} = req.params;
-        const {name, password, predictions, imgUrl, ...rest} = req.body;
+        const {predictions, imgUrl} = req.body;
         const updatedUser = await User.updateOne({email: email}, {
             $set: {
-                name,
-                email,
                 predictions,
-                imgUrl,
-                ...rest
+                imgUrl
             }
         });
-        await storeUserPassword(email, password, 10);
+        // await storeUserPassword(email, password, 10); // No need?
         res.status(200).send(updatedUser);
     } catch (error) {
         console.log(error);
@@ -95,5 +104,6 @@ module.exports = {
     addNewUser,
     login,
     updateUser,
-    addPrediction
+    addPrediction,
+    // loginWithGoogle
 }

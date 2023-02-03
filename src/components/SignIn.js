@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
+import { signInGoogleUser } from '../http/firebaseRequests';
+import { loginWithGoogle } from '../http/frontRequests';
 
 export const defaultFieldValues = {
   email: "",
@@ -31,6 +33,10 @@ const SignIn = () => {
     return setFieldValues({...fieldValues, [e.target.name]: e.target.value})
   };
 
+  // const handleGoogleSignIn = () => {
+  //   return signInGoogleUser();
+  // }
+
 
   return (
     <div className='form-container'>
@@ -58,6 +64,7 @@ const SignIn = () => {
 
             <div className='buttons-container'>
                 <button type='submit' className='btn'>Sign in</button>
+                {/* <button type='submit' className='btn' onClick={handleGoogleSignIn}>Google Sign in</button> */}
             </div>
         </form>
         <Link to="/register" className='link blue small-text'>I don't have an account</Link>

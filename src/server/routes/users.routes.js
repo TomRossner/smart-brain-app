@@ -5,7 +5,8 @@ const {
     addNewUser,
     login,
     updateUser,
-    addPrediction
+    addPrediction,
+    // loginWithGoogle
 } = require("./users.controller");
 
 Router.get('/users', getAllUsers);
@@ -13,6 +14,8 @@ Router.get('/users', getAllUsers);
 Router.post('/users', addNewUser);
 
 Router.post("/login", login);
+
+// Router.post("/google-login", loginWithGoogle);
 
 Router.put("/update-predictions/:id", addPrediction);
 

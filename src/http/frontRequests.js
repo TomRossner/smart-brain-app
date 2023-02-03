@@ -17,6 +17,10 @@ export const login = async (credentials) => {
     return data;
 }
 
+export const loginWithGoogle = async () => {
+    return await httpService.post(`${BASE_URL}/google-login`)
+}
+
 export const register = async (data) => {
     return await httpService.post(`${BASE_URL}/users`, data);
 }
