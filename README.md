@@ -1,8 +1,13 @@
 # Smart Brain - Face Recognition app
 
-This project is a face detection app built With ReactJS, Node.js, Express, MongoDB and using Clarifai API/GRPC face-detection model.
+This project is a face detection app built with
+- ReactJS
+- Node.j
+- Express
+- MongoD
+- Clarifai API/GRPC face-detection model.
 
-### Features
+### Features:
 
 - Sign in
 - Sign up
