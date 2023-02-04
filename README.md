@@ -4,7 +4,7 @@ This project is a face detection app built with
 - ReactJS
 - Node.js
 - Express
-- MongoD
+- MongoDB
 - Clarifai API/GRPC face-detection model.
 
 #### Link: https://tomrossner.github.io/smart-brain-app
