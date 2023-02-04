@@ -4,13 +4,13 @@ This project is a face detection app built With ReactJS, Node.js, Express, Mongo
 
 ### Features
 
-∙ Sign in
-∙ Sign up
-∙ Upload images from device or via URL
-∙ Detect all faces in the image and showing them with a blue bounding box
-∙ Keep track of total submissions per user
-∙ Add/change/remove profile picture
-∙ Mobile friendly
+- Sign in
+- Sign up
+- Upload images from device or via URL
+- Detect all faces in the image and showing them with a blue bounding box
+- Keep track of total submissions per user
+- Add/change/remove profile picture
+- Mobile friendly
 
 
 Here are a few images from project (as it is not running on a server at the moment):
