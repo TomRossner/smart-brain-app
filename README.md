@@ -2,7 +2,7 @@
 
 This project is a face detection app built with
 - ReactJS
-- Node.j
+- Node.js
 - Express
 - MongoD
 - Clarifai API/GRPC face-detection model.
